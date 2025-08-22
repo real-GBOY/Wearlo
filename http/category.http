@@ -1,0 +1,59 @@
+@baseUrl = http://localhost:5000
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGE3MTgzYWExZTU4NWY1NGZhY2E4Y2UiLCJyb2xlS2V5IjoidXNlciIsImlhdCI6MTc1NTc4NTg2NywiZXhwIjoxNzU1ODcyMjY3fQ.RnmfiHEBZ6xJtbNSMVDfTeTvbIqS9qhn8sb1o_MB5dM
+@categoryId = 000000000000000000000000
+
+### List categories
+GET {{baseUrl}}/api/categories
+Authorization: Bearer {{token}}
+
+### Get category by id
+GET {{baseUrl}}/api/categories/{{categoryId}}
+Authorization: Bearer {{token}}
+
+### Create category (multipart with image upload)
+# @name createCategory
+POST {{baseUrl}}/api/categories
+Authorization: Bearer {{token}}
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="name"
+
+Shirts
+--WebAppBoundary
+Content-Disposition: form-data; name="description"
+
+All kinds of shirts
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="Copy.jpg"
+Content-Type: image/jpeg
+
+< ../Copy.jpg
+--WebAppBoundary--
+
+### Update category (JSON)
+PUT {{baseUrl}}/api/categories/{{createCategory.response.body.category._id}}
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Shirts & Tees",
+  "description": "Updated description"
+}
+
+### Update category image (multipart)
+PUT {{baseUrl}}/api/categories/{{createCategory.response.body.category._id}}
+Authorization: Bearer {{token}}
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="category2.jpg"
+
+< ./assets/sample-category-2.jpg
+--WebAppBoundary--
+
+### Delete category
+DELETE {{baseUrl}}/api/categories/{{createCategory.response.body.category._id}}
+Authorization: Bearer {{token}}
+
+

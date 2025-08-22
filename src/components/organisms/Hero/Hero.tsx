@@ -16,7 +16,7 @@ export const Hero: React.FC = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             <Typography variant="h1" className="mb-6">
-              MINIMAL
+            WEARLO
               <br />
               <span className="text-gray-600 dark:text-gray-400">ESSENTIALS</span>
             </Typography>

@@ -1,0 +1,84 @@
+@baseUrl = http://localhost:5000
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGE3MTgzYWExZTU4NWY1NGZhY2E4Y2UiLCJyb2xlS2V5IjoiYWRtaW4iLCJpYXQiOjE3NTU3ODcxNjAsImV4cCI6MTc1NTg3MzU2MH0.rsi46Iq8NL2YdWrh7QuUs_kDlNCB-tqWt6oSnDvQ0Mo
+@productId = 68a72e154488d69511
+@categoryId = 68a72e154488d69b9520ad14
+
+### List products
+GET {{baseUrl}}/api/products?page=1&limit=10
+Authorization: Bearer {{token}}
+
+### Get product by id
+GET {{baseUrl}}/api/products/{{productId}}
+Authorization: Bearer {{token}}
+ 
+### Create product (multipart form-data with single image upload)
+POST {{baseUrl}}/api/products
+Authorization: Bearer {{token}}
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="name"
+
+T-Shirt
+--WebAppBoundary
+Content-Disposition: form-data; name="description"
+
+Classic cotton tee
+--WebAppBoundary
+Content-Disposition: form-data; name="price"
+
+25
+--WebAppBoundary
+Content-Disposition: form-data; name="discount"
+
+5
+--WebAppBoundary
+Content-Disposition: form-data; name="stock"
+
+100
+--WebAppBoundary
+Content-Disposition: form-data; name="category"
+
+{{categoryId}}
+--WebAppBoundary
+Content-Disposition: form-data; name="sizes"
+
+[{"label":"S","stock":10},{"label":"M","stock":15}]
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="Copy.jpg"
+
+< ../Copy.jpg
+--WebAppBoundary--
+
+### Update product (JSON; no file)
+PUT {{baseUrl}}/api/products/{{productId}}
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "T-Shirt Updated",
+  "price": 27,
+  "discount": 10,
+  "sizes": [
+    { "label": "S", "stock": 12 },
+    { "label": "M", "stock": 18 }
+  ]
+}
+
+### Append new image to product (multipart upload)
+PUT {{baseUrl}}/api/products/{{productId}}
+Authorization: Bearer {{token}}
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="image2.jpg"
+
+< ./assets/sample-product-2.jpg
+--WebAppBoundary--
+
+### Delete product
+DELETE {{baseUrl}}/api/products/{{productId}}
+Authorization: Bearer {{token}}
+
+
+

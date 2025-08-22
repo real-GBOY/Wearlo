@@ -1,0 +1,56 @@
+@baseUrl = http://localhost:5000
+@contentType = application/json
+@email = john@gmail.com
+@password = 123456@
+
+### Health check
+GET {{baseUrl}}/health
+
+### Register new user (captures token)
+# @name register
+POST {{baseUrl}}/api/auth/register
+Content-Type: {{contentType}}
+
+{
+  "name": "John Doe",
+  "email": "{{email}}",
+  "password": "{{password}}",
+  "phone": "+201234567890",
+  "address": "123 Main St",
+  "city": "Cairo",
+  "zip": "12345",
+  "country": "EG"
+}
+
+### Login (captures token)
+# @name login
+POST {{baseUrl}}/api/auth/login
+Content-Type: {{contentType}}
+
+{
+  "email": "{{email}}",
+  "password": "{{password}}"
+}
+
+### Example authorized request (using captured token)
+GET {{baseUrl}}/health
+Authorization: Bearer {{login.response.body.token}}
+
+### Refresh access token
+# @name refresh
+POST {{baseUrl}}/api/auth/refresh
+Content-Type: {{contentType}}
+
+{
+  "refreshToken": "{{login.response.body.refreshToken}}"
+}
+
+### Logout (invalidate refresh token)
+POST {{baseUrl}}/api/auth/logout
+Content-Type: {{contentType}}
+
+{
+  "refreshToken": "{{login.response.body.refreshToken}}"
+}
+
+

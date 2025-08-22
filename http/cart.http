@@ -1,0 +1,77 @@
+### Cart API Endpoints
+
+# Variables (set these in your environment or replace manually)
+@baseUrl = http://localhost:5000
+@authToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGE3MTgzYWExZTU4NWY1NGZhY2E4Y2UiLCJyb2xlS2V5IjoiYWRtaW4iLCJpYXQiOjE3NTU4NjI0NzEsImV4cCI6MTc1NTk0ODg3MX0.DsQXN-dz223UpFuGyu9FxiIjQXcH7R9zefbv4jSCiJQ
+@productId = 68a85bf02ba81dee07fe3ec2
+
+###
+
+# Get user's cart
+GET {{baseUrl}}/api/cart
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+###
+
+# Add item to cart
+POST {{baseUrl}}/api/cart/add
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "productId": "{{productId}}",
+  "quantity": 2
+}
+
+###
+
+# Update cart item quantity
+PUT {{baseUrl}}/api/cart/update
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "productId": "{{productId}}",
+  "quantity": 3
+}
+
+###
+
+# Remove item from cart
+DELETE {{baseUrl}}/api/cart/remove/{{productId}}
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+###
+
+# Clear entire cart
+DELETE {{baseUrl}}/api/cart/clear
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+###
+
+# Test with different product
+POST {{baseUrl}}/api/cart/add
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "productId": "64f9876543210fedcba98765",
+  "quantity": 1
+}
+
+###
+
+# Update multiple items
+PUT {{baseUrl}}/api/cart/update
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "productId": "{{productId}}",
+  "quantity": 5
+}
+
+###

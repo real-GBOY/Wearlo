@@ -1,15 +1,17 @@
+/** @format */
+
 export interface Product {
-  id: string;
-  name: string;
-  price: number;
-  description: string;
-  images: string[];
-  category: string;
-  featured?: boolean;
+	id: string;
+	name: string;
+	price: number;
+	description: string;
+	images: string[];
+	category: string;
+	featured?: boolean;
 }
 
 export interface CartItem extends Product {
-  quantity: number;
+	quantity: number;
 }
 
-export type Theme = 'light' | 'dark';
+export type Theme = "light" | "dark";
