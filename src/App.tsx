@@ -4,6 +4,7 @@ import { ThemeProvider } from './contexts/ThemeContext';
 import { PageTemplate } from './components/templates/PageTemplate/PageTemplate';
 import { Landing } from './components/pages/Landing/Landing';
 import { ProductDetails } from './components/pages/ProductDetails/ProductDetails';
+import { Auth } from './components/pages/Auth/Auth';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Landing />} />
             <Route path="/product/:id" element={<ProductDetails />} />
+            <Route path="/auth" element={<Auth />} />
           </Routes>
         </PageTemplate>
       </Router>
