@@ -112,7 +112,7 @@ const ProductManagementScreen: React.FC = () => {
 			label: "Category",
 			render: (value: string, product: Product) => (
 				<span className='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200'>
-					{product.category}
+					{product.categoryName || product.category}
 				</span>
 			),
 		},
@@ -290,7 +290,7 @@ const ProductManagementScreen: React.FC = () => {
 
 	const categoryOptions = [
 		{ value: "", label: "All Categories" },
-		...categories.map((cat) => ({ value: cat.name, label: cat.name })),
+		...categories.map((cat) => ({ value: cat._id, label: cat.name })),
 	];
 
 	return (
@@ -414,7 +414,7 @@ const ProductManagementScreen: React.FC = () => {
 													}))
 												}
 												options={categories.map((cat) => ({
-													value: cat.name,
+													value: cat._id,
 													label: cat.name,
 												}))}
 											/>

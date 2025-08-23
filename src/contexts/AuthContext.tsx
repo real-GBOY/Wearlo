@@ -6,7 +6,8 @@ import apiRepo from "../../config/apiRepo";
 import endPoints from "../../config/endPoints";
 import Cookies from "js-cookie";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+// Remove useNavigate import since it's not used in context
+// import { useNavigate } from "react-router-dom";
 
 interface Permission {
 	_id: string;
@@ -100,7 +101,8 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 	const [user, setUser] = useState<User | null>(null);
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
 	const [isLoading, setIsLoading] = useState(true);
-	const navigate = useNavigate();
+	// Remove useNavigate from context - it should only be used in components
+	// const navigate = useNavigate();
 
 	useEffect(() => {
 		const token = Cookies.get("token");
@@ -208,14 +210,15 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 				setUser(user);
 				setIsAuthenticated(true);
 
-				// Navigate based on user role after successful login
-				if (user.role?.key === "admin") {
-					navigate("/admin");
-				} else if (user.role?.key === "manager") {
-					navigate("/manager");
-				} else {
-					navigate("/");
-				}
+				// Don't navigate automatically - let the component handle navigation
+				// This prevents potential infinite loops
+				// if (user.role?.key === "admin") {
+				// 	navigate("/admin");
+				// } else if (user.role?.key === "manager") {
+				// 	navigate("/manager");
+				// } else {
+				// 	navigate("/");
+				// }
 			} catch (error) {
 				console.error("Error processing login response:", error);
 				console.error("Response data:", data);
@@ -324,13 +327,13 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 				setIsAuthenticated(true);
 
 				// Navigate based on user role after successful signup
-				if (user.role?.key === "admin") {
-					navigate("/admin");
-				} else if (user.role?.key === "manager") {
-					navigate("/manager");
-				} else {
-					navigate("/");
-				}
+				// if (user.role?.key === "admin") {
+				// 	navigate("/admin");
+				// } else if (user.role?.key === "manager") {
+				// 	navigate("/manager");
+				// } else {
+				// 	navigate("/");
+				// }
 			} catch (error) {
 				console.error("Error processing signup response:", error);
 				console.error("Response data:", data);
@@ -420,8 +423,8 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 		Cookies.remove("token");
 		Cookies.remove("user");
 
-		// Redirect to auth page after logout
-		navigate("/auth");
+		// Don't navigate from context - let the component handle navigation
+		// navigate("/");
 	};
 
 	return (

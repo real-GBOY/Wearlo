@@ -8,6 +8,7 @@ import { Typography } from "../../atoms/Typography/Typography";
 import { Icon } from "../../atoms/Icon/Icon";
 import { AuthModal } from "../../organisms/AuthModal";
 import { AnimatedThemeToggler } from "../../magicui/animated-theme-toggler";
+import { CartIcon } from "../../atoms/CartIcon/CartIcon";
 import { useAuth } from "../../../contexts/AuthContext";
 import { AnimatePresence } from "framer-motion";
 
@@ -93,6 +94,9 @@ export const Navigation: React.FC = () => {
 					</div>
 
 					<div className='flex items-center space-x-4'>
+						{/* Cart Icon */}
+						<CartIcon />
+
 						{isAuthenticated ? (
 							<div className='relative' ref={userMenuRef}>
 								<motion.button
@@ -128,6 +132,13 @@ export const Navigation: React.FC = () => {
 												</p>
 											</div>
 											<div className='p-1'>
+												<Link
+													to='/profile'
+													onClick={() => setIsUserMenuOpen(false)}
+													className='w-full flex items-center space-x-2 px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md transition-colors'>
+													<User size={16} />
+													<span>Profile</span>
+												</Link>
 												<button
 													onClick={() => {
 														setIsUserMenuOpen(false);

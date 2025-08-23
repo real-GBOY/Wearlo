@@ -102,10 +102,10 @@ export const categoryService = {
 				if (data.description) formData.append("description", data.description);
 				formData.append("file", data.image);
 
-				response = await apiRepo.PUT(endPoints.categories.update(id), formData);
+				response = await apiRepo.PATCH(endPoints.categories.update(id), formData);
 			} else {
 				// If no image, use JSON
-				response = await apiRepo.PUT(endPoints.categories.update(id), data);
+				response = await apiRepo.PATCH(endPoints.categories.update(id), data);
 			}
 
 			const category = response.data || response;

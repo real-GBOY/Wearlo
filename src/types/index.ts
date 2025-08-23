@@ -1,12 +1,24 @@
 /** @format */
 
+export interface ProductSize {
+	label: string;
+	stock: number;
+}
+
 export interface Product {
-	id: string;
+	_id: string;
+	id: string; // For DataTable compatibility
 	name: string;
-	price: number;
 	description: string;
-	images: string[];
+	price: number;
+	discount?: number;
+	stock: number;
 	category: string;
+	sizes: ProductSize[];
+	images: string[];
+	createdAt: string;
+	updatedAt?: string;
+	__v?: number;
 	featured?: boolean;
 }
 
@@ -97,11 +109,16 @@ export interface Notification {
 
 // Category interface
 export interface Category {
-	id: string;
+	_id: string;
+	id: string; // For DataTable compatibility
 	name: string;
-	description?: string;
-	productCount: number;
-	status: "active" | "inactive";
+	description: string;
+	image?: string;
+	productCount?: number;
+	status?: "active" | "inactive";
+	createdAt: string;
+	updatedAt?: string;
+	__v?: number;
 }
 
 // Inventory history

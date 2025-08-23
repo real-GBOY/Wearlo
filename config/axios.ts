@@ -116,9 +116,8 @@ apiClient.interceptors.response.use(
 				// Process queued requests with error
 				processQueue(refreshError, null);
 
-				// Redirect to login (this will be handled by the component)
-				// Note: You might want to use React Router's navigate instead of window.location
-				window.location.href = "/login";
+				// Don't automatically redirect - let the React components handle this
+				// window.location.href = "/login";
 
 				return Promise.reject(refreshError);
 			} finally {

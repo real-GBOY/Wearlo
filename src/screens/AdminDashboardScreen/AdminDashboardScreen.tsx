@@ -6,6 +6,7 @@ import DashboardTemplate from "../../components/templates/DashboardTemplate/Dash
 import DashboardOverviewScreen from "../DashboardOverviewScreen";
 import ProductManagementScreen from "../ProductManagementScreen";
 import CategoryManagementScreen from "../CategoryManagementScreen";
+import CustomersManagementScreen from "../CustomersManagementScreen";
 import { useAuth } from "../../contexts/AuthContext";
 
 const AdminDashboardScreen: React.FC = () => {
@@ -40,6 +41,7 @@ const AdminDashboardScreen: React.FC = () => {
 				<Route path='/' element={<DashboardOverviewScreen />} />
 				<Route path='/products' element={<ProductManagementScreen />} />
 				<Route path='/categories' element={<CategoryManagementScreen />} />
+				<Route path='/customers' element={<CustomersManagementScreen />} />
 				<Route
 					path='/orders'
 					element={<div>Orders Management - Coming Soon</div>}

@@ -11,6 +11,7 @@ export { Typography } from "./atoms/Typography";
 export { default as Card } from "./atoms/Card";
 export { default as Badge } from "./atoms/Badge";
 export { default as Select } from "./atoms/Select";
+export { CartIcon } from "./atoms/CartIcon";
 
 // Molecules
 export { AuthForm } from "./molecules/AuthForm";

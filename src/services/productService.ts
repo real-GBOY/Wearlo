@@ -2,6 +2,7 @@
 
 import apiRepo from "../../config/apiRepo";
 import endPoints from "../../config/endPoints";
+import { categoryService, Category } from "./categoryService";
 
 export interface ProductSize {
 	label: string;
@@ -16,7 +17,8 @@ export interface Product {
 	price: number;
 	discount?: number;
 	stock: number;
-	category: string;
+	category: string; // This is the category ID
+	categoryName?: string; // This will be the category name for display
 	sizes: ProductSize[];
 	images: string[];
 	createdAt: string;
@@ -62,15 +64,32 @@ export const productService = {
 			const total = response.total || products.length;
 
 			console.log("Extracted products:", products);
-			console.log("Total count:", total);
 
-			// Map _id to id for DataTable compatibility
+			// Fetch categories to map category names
+			let categories: Category[] = [];
+			try {
+				categories = await categoryService.getAll();
+			} catch (error) {
+				console.warn(
+					"Failed to fetch categories for product enrichment:",
+					error
+				);
+			}
+
+			// Create a map of category ID to category name
+			const categoryMap = new Map<string, string>();
+			categories.forEach((cat) => {
+				categoryMap.set(cat._id, cat.name);
+			});
+
+			// Map _id to id for DataTable compatibility and add category names
 			const mappedProducts = products.map((prod: any) => ({
 				...prod,
 				id: prod._id,
+				categoryName: categoryMap.get(prod.category) || prod.category, // Fallback to ID if name not found
 			}));
 
-			console.log("Mapped products:", mappedProducts);
+			console.log("Mapped products with category names:", mappedProducts);
 			return { items: mappedProducts, total };
 		} catch (error) {
 			console.error("Error fetching products:", error);
@@ -140,10 +159,10 @@ export const productService = {
 				if (data.sizes) formData.append("sizes", JSON.stringify(data.sizes));
 				formData.append("file", data.image);
 
-				response = await apiRepo.PUT(endPoints.products.update(id), formData);
+				response = await apiRepo.PATCH(endPoints.products.update(id), formData);
 			} else {
 				// If no image, use JSON
-				response = await apiRepo.PUT(endPoints.products.update(id), data);
+				response = await apiRepo.PATCH(endPoints.products.update(id), data);
 			}
 
 			const product = response.data || response;
