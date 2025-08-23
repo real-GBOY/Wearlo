@@ -1,13 +1,15 @@
 /** @format */
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { AuthForm } from "../../components/molecules/AuthForm";
 import { AnimatedThemeToggler } from "../../components/magicui";
+import { useAuth } from "../../contexts/AuthContext";
 
 export const AuthScreen: React.FC = () => {
 	const [mode, setMode] = useState<"login" | "signup">("login");
 	const [isLoading, setIsLoading] = useState(false);
+	const { isLoading: authLoading } = useAuth();
 
 	const handleModeChange = (newMode: "login" | "signup") => {
 		setMode(newMode);
@@ -21,6 +23,20 @@ export const AuthScreen: React.FC = () => {
 		// Here you would typically make the actual API call
 		console.log("Auth form submitted:", data);
 	};
+
+	// Show loading overlay while checking authentication
+	if (authLoading) {
+		return (
+			<div className='min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center p-4'>
+				<div className='text-center'>
+					<div className='animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4'></div>
+					<p className='text-gray-600 dark:text-gray-400'>
+						Checking authentication...
+					</p>
+				</div>
+			</div>
+		);
+	}
 
 	return (
 		<div className='min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center p-4'>
