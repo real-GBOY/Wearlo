@@ -8,6 +8,7 @@ import { AuthProvider } from "./contexts/AuthContext";
 import { PageTemplate } from "./components/templates/PageTemplate/PageTemplate";
 import { LandingScreen, ProductDetailsScreen, AuthScreen } from "./screens";
 import { NotFound } from "./components/pages/NotFound";
+import { Payment } from "./components/pages/Payment";
 
 // Create a client
 const queryClient = new QueryClient();
@@ -36,6 +37,14 @@ function App() {
 								}
 							/>
 							<Route path='/auth' element={<AuthScreen />} />
+							<Route
+								path='/payment'
+								element={
+									<PageTemplate>
+										<Payment />
+									</PageTemplate>
+								}
+							/>
 							<Route
 								path='*'
 								element={
