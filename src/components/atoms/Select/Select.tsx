@@ -72,7 +72,7 @@ const Select: React.FC<SelectProps> = ({
 	return (
 		<div className={cn("w-full", className)}>
 			{label && (
-				<label className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2'>
+				<label className='block text-sm font-medium text-gray-700 mb-2'>
 					{label}
 				</label>
 			)}
@@ -82,19 +82,17 @@ const Select: React.FC<SelectProps> = ({
 					onClick={toggleOpen}
 					disabled={disabled}
 					className={cn(
-						"relative w-full bg-white dark:bg-gray-800 border rounded-lg px-3 py-2 text-left cursor-pointer transition-colors duration-200",
+						"relative w-full bg-white border rounded-lg px-3 py-2 text-left cursor-pointer transition-colors duration-200",
 						"focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500",
 						"disabled:opacity-50 disabled:cursor-not-allowed",
 						error
-							? "border-red-300 dark:border-red-600 focus:ring-red-500 focus:border-red-500"
-							: "border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500"
+							? "border-red-300 focus:ring-red-500 focus:border-red-500"
+							: "border-gray-300 hover:border-gray-400"
 					)}>
 					<span
 						className={cn(
 							"block truncate",
-							selectedOption
-								? "text-gray-900 dark:text-gray-100"
-								: "text-gray-500 dark:text-gray-400"
+							selectedOption ? "text-gray-900" : "text-gray-500"
 						)}>
 						{selectedOption ? selectedOption.label : placeholder}
 					</span>
@@ -114,7 +112,7 @@ const Select: React.FC<SelectProps> = ({
 							animate={{ opacity: 1, y: 0, scale: 1 }}
 							exit={{ opacity: 0, y: -10, scale: 0.95 }}
 							transition={{ duration: 0.15 }}
-							className='absolute z-50 w-full mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg max-h-60 overflow-auto'>
+							className='absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-60 overflow-auto'>
 							{options.map((option) => (
 								<button
 									key={option.value}
@@ -123,17 +121,17 @@ const Select: React.FC<SelectProps> = ({
 									disabled={option.disabled}
 									className={cn(
 										"w-full px-3 py-2 text-left cursor-pointer transition-colors duration-150",
-										"hover:bg-gray-50 dark:hover:bg-gray-700",
-										"focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-700",
+										"hover:bg-gray-50",
+										"focus:outline-none focus:bg-gray-50",
 										"disabled:opacity-50 disabled:cursor-not-allowed",
 										option.value === value
-											? "bg-blue-50 dark:bg-blue-900/20 text-blue-900 dark:text-blue-100"
-											: "text-gray-900 dark:text-gray-100"
+											? "bg-blue-50 text-blue-900"
+											: "text-gray-900"
 									)}>
 									<div className='flex items-center justify-between'>
 										<span className='truncate'>{option.label}</span>
 										{option.value === value && (
-											<Check className='h-4 w-4 text-blue-600 dark:text-blue-400' />
+											<Check className='h-4 w-4 text-blue-600' />
 										)}
 									</div>
 								</button>
@@ -142,9 +140,7 @@ const Select: React.FC<SelectProps> = ({
 					)}
 				</AnimatePresence>
 			</div>
-			{error && (
-				<p className='mt-1 text-sm text-red-600 dark:text-red-400'>{error}</p>
-			)}
+			{error && <p className='mt-1 text-sm text-red-600'>{error}</p>}
 		</div>
 	);
 };

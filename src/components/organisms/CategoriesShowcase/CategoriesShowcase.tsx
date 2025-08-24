@@ -49,7 +49,7 @@ export const CategoriesShowcase: React.FC = () => {
 	];
 
 	const displayCategories = categories?.length
-		? categories.slice(0, 4)
+		? categories.slice(0, 4) // Show only 4 in showcase, but "View All" will show all
 		: fallbackCategories;
 
 	const handleCategoryClick = (categoryId: string) => {
@@ -58,7 +58,7 @@ export const CategoriesShowcase: React.FC = () => {
 
 	if (isLoading) {
 		return (
-			<section className='py-20 bg-white dark:bg-black'>
+			<section className='py-20 bg-white'>
 				<div className='container mx-auto px-6'>
 					<div className='text-center'>
 						<Typography variant='h2' className='mb-4'>
@@ -71,7 +71,7 @@ export const CategoriesShowcase: React.FC = () => {
 	}
 
 	return (
-		<section className='py-20 bg-white dark:bg-black'>
+		<section className='py-20 bg-white'>
 			<div className='container mx-auto px-6'>
 				{/* Header */}
 				<motion.div
@@ -85,7 +85,7 @@ export const CategoriesShowcase: React.FC = () => {
 					</Typography>
 					<Typography
 						variant='body'
-						className='max-w-2xl mx-auto text-gray-600 dark:text-gray-400'>
+						className='max-w-2xl mx-auto text-gray-600'>
 						Discover our carefully curated collections designed to elevate your
 						style
 					</Typography>
@@ -138,12 +138,10 @@ export const CategoriesShowcase: React.FC = () => {
 							<div className='text-center'>
 								<Typography
 									variant='h4'
-									className='mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors'>
+									className='mb-2 group-hover:text-blue-600 transition-colors'>
 									{category.name}
 								</Typography>
-								<Typography
-									variant='body'
-									className='text-gray-600 dark:text-gray-400 text-sm'>
+								<Typography variant='body' className='text-gray-600 text-sm'>
 									{category.description}
 								</Typography>
 							</div>
@@ -159,8 +157,8 @@ export const CategoriesShowcase: React.FC = () => {
 					transition={{ duration: 0.8, delay: 0.4 }}
 					className='text-center mt-12'>
 					<button
-						onClick={() => navigate("/products")}
-						className='inline-flex items-center px-8 py-3 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors'>
+						onClick={() => navigate("/categories")}
+						className='inline-flex items-center px-8 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors'>
 						View All Categories
 						<Icon icon={Shirt} size={20} className='ml-2' />
 					</button>

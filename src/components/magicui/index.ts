@@ -1,3 +1,3 @@
 /** @format */
 
-export { AnimatedThemeToggler } from "./animated-theme-toggler";
+// Theme toggler removed - no exports needed

@@ -8,8 +8,8 @@ import { Button } from "../../atoms/Button/Button";
 export const CallToAction: React.FC = () => {
 	return (
 		<section className='relative py-32 overflow-hidden'>
-			{/* Background with proper dark/light mode */}
-			<div className='absolute inset-0 bg-gradient-to-br from-gray-900 via-black to-gray-800 dark:from-gray-100 dark:via-white dark:to-gray-200 transition-colors duration-500' />
+			{/* Background with light mode */}
+			<div className='absolute inset-0 bg-gradient-to-br from-gray-100 via-white to-gray-200 transition-colors duration-500' />
 
 			<div className='container mx-auto px-6 relative z-10'>
 				<div className='max-w-4xl mx-auto text-center'>
@@ -19,16 +19,14 @@ export const CallToAction: React.FC = () => {
 						viewport={{ once: true }}
 						transition={{ duration: 0.8 }}
 						className='mb-8'>
-						<Typography
-							variant='h2'
-							className='text-white dark:text-gray-900 mb-6'>
+						<Typography variant='h2' className='text-gray-900 mb-6'>
 							ELEVATE YOUR
 							<br />
 							EVERYDAY STYLE
 						</Typography>
 						<Typography
 							variant='body'
-							className='text-gray-200 dark:text-gray-600 max-w-2xl mx-auto'>
+							className='text-gray-600 max-w-2xl mx-auto'>
 							Join thousands who have discovered the perfect balance of comfort,
 							quality, and minimalist design
 						</Typography>
@@ -43,13 +41,13 @@ export const CallToAction: React.FC = () => {
 						<Button
 							variant='primary'
 							size='lg'
-							className='bg-white text-black hover:bg-gray-100 dark:bg-black dark:text-white dark:hover:bg-gray-800 shadow-lg hover:shadow-xl transition-all duration-300'>
+							className='bg-gray-900 text-white hover:bg-gray-800 shadow-lg hover:shadow-xl transition-all duration-300'>
 							SHOP NOW
 						</Button>
 						<Button
 							variant='outline'
 							size='lg'
-							className='border-white text-white hover:bg-white hover:text-black dark:border-gray-900 dark:text-gray-900 dark:hover:bg-gray-900 dark:hover:text-white shadow-lg hover:shadow-xl transition-all duration-300'>
+							className='border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white shadow-lg hover:shadow-xl transition-all duration-300'>
 							VIEW LOOKBOOK
 						</Button>
 					</motion.div>

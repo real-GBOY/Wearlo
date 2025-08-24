@@ -60,7 +60,7 @@ export const InstagramSection: React.FC = () => {
 	];
 
 	return (
-		<section className='py-20 bg-white dark:bg-black'>
+		<section className='py-20 bg-white'>
 			<div className='container mx-auto px-6'>
 				{/* Header */}
 				<motion.div
@@ -75,7 +75,7 @@ export const InstagramSection: React.FC = () => {
 					</div>
 					<Typography
 						variant='body'
-						className='max-w-2xl mx-auto text-gray-600 dark:text-gray-400'>
+						className='max-w-2xl mx-auto text-gray-600'>
 						Follow us on Instagram for daily inspiration, behind-the-scenes
 						content, and to see how our community styles their Wearlo pieces.
 					</Typography>
@@ -90,14 +90,10 @@ export const InstagramSection: React.FC = () => {
 							whileInView={{ opacity: 1, scale: 1 }}
 							viewport={{ once: true }}
 							transition={{ duration: 0.6, delay: index * 0.1 }}
-							className='group relative aspect-square overflow-hidden rounded-lg bg-gray-200 dark:bg-gray-800'>
+							className='group relative aspect-square overflow-hidden rounded-lg bg-gray-200'>
 							{/* Placeholder for Instagram image */}
-							<div className='w-full h-full bg-gradient-to-br from-gray-300 to-gray-400 dark:from-gray-700 dark:to-gray-600 flex items-center justify-center'>
-								<Icon
-									icon={Instagram}
-									size={32}
-									className='text-gray-500 dark:text-gray-400'
-								/>
+							<div className='w-full h-full bg-gradient-to-br from-gray-300 to-gray-400 flex items-center justify-center'>
+								<Icon icon={Instagram} size={32} className='text-gray-500' />
 							</div>
 
 							{/* Hover Overlay */}

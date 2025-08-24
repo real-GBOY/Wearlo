@@ -55,14 +55,14 @@ export const TestimonialsSection: React.FC = () => {
 				className={`${
 					i < rating
 						? "text-yellow-400 fill-current"
-						: "text-gray-300 dark:text-gray-600"
+						: "text-gray-300"
 				}`}
 			/>
 		));
 	};
 
 	return (
-		<section className='py-20 bg-gray-50 dark:bg-gray-900'>
+		<section className='py-20 bg-gray-50'>
 			<div className='container mx-auto px-6'>
 				{/* Header */}
 				<motion.div
@@ -76,7 +76,7 @@ export const TestimonialsSection: React.FC = () => {
 					</Typography>
 					<Typography
 						variant='body'
-						className='max-w-2xl mx-auto text-gray-600 dark:text-gray-400'>
+						className='max-w-2xl mx-auto text-gray-600'>
 						Don't just take our word for it. Here's what our valued customers
 						have to say about their experience with Wearlo.
 					</Typography>
@@ -91,20 +91,20 @@ export const TestimonialsSection: React.FC = () => {
 							whileInView={{ opacity: 1, y: 0 }}
 							viewport={{ once: true }}
 							transition={{ duration: 0.6, delay: index * 0.1 }}
-							className='bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow'>
+							className='bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow'>
 							{/* Quote Icon */}
 							<div className='mb-4'>
 								<Icon
 									icon={Quote}
 									size={24}
-									className='text-blue-500 dark:text-blue-400'
+									className='text-blue-500'
 								/>
 							</div>
 
 							{/* Content */}
 							<Typography
 								variant='body'
-								className='text-gray-700 dark:text-gray-300 mb-4 text-sm leading-relaxed'>
+								className='text-gray-700 mb-4 text-sm leading-relaxed'>
 								"{testimonial.content}"
 							</Typography>
 
@@ -121,12 +121,12 @@ export const TestimonialsSection: React.FC = () => {
 								<div>
 									<Typography
 										variant='body'
-										className='font-semibold text-gray-900 dark:text-white'>
+										className='font-semibold text-gray-900'>
 										{testimonial.name}
 									</Typography>
 									<Typography
 										variant='body'
-										className='text-sm text-gray-600 dark:text-gray-400'>
+										className='text-sm text-gray-600'>
 										{testimonial.role}
 									</Typography>
 								</div>
@@ -147,10 +147,10 @@ export const TestimonialsSection: React.FC = () => {
 					</Typography>
 					<Typography
 						variant='body'
-						className='text-gray-600 dark:text-gray-400 mb-6'>
+						className='text-gray-600 mb-6'>
 						Experience the quality and style that our customers love
 					</Typography>
-					<button className='inline-flex items-center px-8 py-3 bg-black dark:bg-white text-white dark:text-black rounded-lg hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors'>
+					<button className='inline-flex items-center px-8 py-3 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors'>
 						Shop Now
 					</button>
 				</motion.div>

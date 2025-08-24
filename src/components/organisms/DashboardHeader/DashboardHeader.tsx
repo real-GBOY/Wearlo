@@ -5,8 +5,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
 	Search,
 	Bell,
-	Sun,
-	Moon,
 	User,
 	Settings,
 	LogOut,
@@ -15,7 +13,6 @@ import {
 	Menu,
 } from "lucide-react";
 import { cn } from "../../../utils/cn";
-import { useTheme } from "../../../contexts/ThemeContext";
 import { Notification } from "../../../types";
 import Badge from "../../atoms/Badge";
 
@@ -47,7 +44,6 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
 	onLogout,
 	className,
 }) => {
-	const { theme, toggleTheme } = useTheme();
 	const [isSearchOpen, setIsSearchOpen] = useState(false);
 	const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
 	const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
@@ -109,7 +105,7 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
 	return (
 		<motion.header
 			className={cn(
-				"bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 py-3",
+				"bg-white border-b border-gray-200 px-4 py-3",
 				"flex items-center justify-between",
 				className
 			)}
@@ -120,8 +116,8 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
 			<div className='flex items-center space-x-4'>
 				<button
 					onClick={onMenuToggle}
-					className='p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors lg:hidden'>
-					<Menu className='h-5 w-5 text-gray-600 dark:text-gray-400' />
+					className='p-2 rounded-lg hover:bg-gray-100 transition-colors lg:hidden'>
+					<Menu className='h-5 w-5 text-gray-600' />
 				</button>
 
 				{/* Search Bar */}
@@ -140,21 +136,21 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
 									placeholder='Search...'
 									value={searchTerm}
 									onChange={(e) => setSearchTerm(e.target.value)}
-									className='w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-blue-500'
+									className='w-full px-4 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500'
 									autoFocus
 								/>
 								<button
 									type='button'
 									onClick={() => setIsSearchOpen(false)}
-									className='ml-2 p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'>
+									className='ml-2 p-1 text-gray-400 hover:text-gray-600'>
 									<X className='h-4 w-4' />
 								</button>
 							</motion.form>
 						) : (
 							<button
 								onClick={() => setIsSearchOpen(true)}
-								className='p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors'>
-								<Search className='h-5 w-5 text-gray-600 dark:text-gray-400' />
+								className='p-2 rounded-lg hover:bg-gray-100 transition-colors'>
+								<Search className='h-5 w-5 text-gray-600' />
 							</button>
 						)}
 					</AnimatePresence>
@@ -163,23 +159,12 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
 
 			{/* Right Section */}
 			<div className='flex items-center space-x-4'>
-				{/* Theme Toggle */}
-				<button
-					onClick={toggleTheme}
-					className='p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors'>
-					{theme === "dark" ? (
-						<Sun className='h-5 w-5 text-yellow-500' />
-					) : (
-						<Moon className='h-5 w-5 text-gray-600' />
-					)}
-				</button>
-
 				{/* Notifications */}
 				<div className='relative' ref={notificationsRef}>
 					<button
 						onClick={() => setIsNotificationsOpen(!isNotificationsOpen)}
-						className='relative p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors'>
-						<Bell className='h-5 w-5 text-gray-600 dark:text-gray-400' />
+						className='relative p-2 rounded-lg hover:bg-gray-100 transition-colors'>
+						<Bell className='h-5 w-5 text-gray-600' />
 						{unreadNotifications.length > 0 && (
 							<Badge
 								variant='error'
@@ -199,16 +184,16 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
 								animate={{ opacity: 1, y: 0, scale: 1 }}
 								exit={{ opacity: 0, y: 10, scale: 0.95 }}
 								transition={{ duration: 0.2 }}
-								className='absolute right-0 mt-2 w-80 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-lg z-50'>
-								<div className='p-4 border-b border-gray-200 dark:border-gray-700'>
+								className='absolute right-0 mt-2 w-80 bg-white rounded-lg border border-gray-200 shadow-lg z-50'>
+								<div className='p-4 border-b border-gray-200'>
 									<div className='flex items-center justify-between'>
-										<h3 className='text-lg font-semibold text-gray-900 dark:text-gray-100'>
+										<h3 className='text-lg font-semibold text-gray-900'>
 											Notifications
 										</h3>
 										{unreadNotifications.length > 0 && (
 											<button
 												onClick={onMarkAllRead}
-												className='text-sm text-blue-600 dark:text-blue-400 hover:underline'>
+												className='text-sm text-blue-600 hover:underline'>
 												Mark all read
 											</button>
 										)}
@@ -217,7 +202,7 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
 
 								<div className='max-h-96 overflow-y-auto'>
 									{notifications.length === 0 ? (
-										<div className='p-4 text-center text-gray-500 dark:text-gray-400'>
+										<div className='p-4 text-center text-gray-500'>
 											No notifications
 										</div>
 									) : (
@@ -226,26 +211,22 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
 												key={notification.id}
 												onClick={() => onNotificationClick?.(notification)}
 												className={cn(
-													"p-4 border-b border-gray-100 dark:border-gray-700 cursor-pointer transition-colors",
-													"hover:bg-gray-50 dark:hover:bg-gray-700",
-													!notification.read && "bg-blue-50 dark:bg-blue-900/10"
+													"p-4 border-b border-gray-100 cursor-pointer transition-colors",
+													"hover:bg-gray-50",
+													!notification.read && "bg-blue-50"
 												)}>
 												<div className='flex items-start space-x-3'>
 													<div className='flex-shrink-0'>
-														<Badge
-															variant={notification.type}
-															size='sm'
-															className='w-2 h-2 rounded-full'
-														/>
+														<div className='w-2 h-2 rounded-full bg-blue-500'></div>
 													</div>
 													<div className='flex-1 min-w-0'>
-														<p className='text-sm font-medium text-gray-900 dark:text-gray-100'>
+														<p className='text-sm font-medium text-gray-900'>
 															{notification.title}
 														</p>
-														<p className='text-sm text-gray-500 dark:text-gray-400 mt-1'>
+														<p className='text-sm text-gray-500 mt-1'>
 															{notification.message}
 														</p>
-														<p className='text-xs text-gray-400 dark:text-gray-500 mt-2'>
+														<p className='text-xs text-gray-400 mt-2'>
 															{formatNotificationTime(notification.createdAt)}
 														</p>
 													</div>
@@ -263,8 +244,8 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
 				<div className='relative' ref={userMenuRef}>
 					<button
 						onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-						className='flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors'>
-						<div className='w-8 h-8 rounded-full bg-gray-300 dark:bg-gray-600 flex items-center justify-center'>
+						className='flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-100 transition-colors'>
+						<div className='w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center'>
 							{user.avatar ? (
 								<img
 									src={user.avatar}
@@ -272,16 +253,12 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
 									className='w-8 h-8 rounded-full object-cover'
 								/>
 							) : (
-								<User className='h-4 w-4 text-gray-600 dark:text-gray-400' />
+								<User className='h-4 w-4 text-gray-600' />
 							)}
 						</div>
 						<div className='hidden md:block text-left'>
-							<p className='text-sm font-medium text-gray-900 dark:text-gray-100'>
-								{user.name}
-							</p>
-							<p className='text-xs text-gray-500 dark:text-gray-400'>
-								{user.role}
-							</p>
+							<p className='text-sm font-medium text-gray-900'>{user.name}</p>
+							<p className='text-xs text-gray-500'>{user.role}</p>
 						</div>
 						<ChevronDown className='h-4 w-4 text-gray-400' />
 					</button>
@@ -293,14 +270,12 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
 								animate={{ opacity: 1, y: 0, scale: 1 }}
 								exit={{ opacity: 0, y: 10, scale: 0.95 }}
 								transition={{ duration: 0.2 }}
-								className='absolute right-0 mt-2 w-56 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-lg z-50'>
-								<div className='p-4 border-b border-gray-200 dark:border-gray-700'>
-									<p className='text-sm font-medium text-gray-900 dark:text-gray-100'>
+								className='absolute right-0 mt-2 w-56 bg-white rounded-lg border border-gray-200 shadow-lg z-50'>
+								<div className='p-4 border-b border-gray-200'>
+									<p className='text-sm font-medium text-gray-900'>
 										{user.name}
 									</p>
-									<p className='text-sm text-gray-500 dark:text-gray-400'>
-										{user.email}
-									</p>
+									<p className='text-sm text-gray-500'>{user.email}</p>
 								</div>
 
 								<div className='py-2'>
@@ -309,7 +284,7 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
 											setIsUserMenuOpen(false);
 											// Navigate to profile/settings
 										}}
-										className='flex items-center w-full px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors'>
+										className='flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors'>
 										<Settings className='h-4 w-4 mr-3' />
 										Settings
 									</button>
@@ -318,7 +293,7 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
 											setIsUserMenuOpen(false);
 											onLogout?.();
 										}}
-										className='flex items-center w-full px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/10 transition-colors'>
+										className='flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors'>
 										<LogOut className='h-4 w-4 mr-3' />
 										Logout
 									</button>

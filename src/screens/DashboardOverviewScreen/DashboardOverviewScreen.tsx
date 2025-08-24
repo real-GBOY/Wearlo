@@ -37,7 +37,7 @@ const DashboardOverviewScreen: React.FC = () => {
 		{
 			key: "total",
 			label: "Total",
-			render: (value: number) => `$${value.toFixed(2)}`,
+			render: (value: number) => `EGP ${value.toFixed(2)}`,
 		},
 		{
 			key: "status",
@@ -78,10 +78,10 @@ const DashboardOverviewScreen: React.FC = () => {
 			{/* Page Header */}
 			<div className='flex items-center justify-between'>
 				<div>
-					<h1 className='text-2xl font-bold text-gray-900 dark:text-gray-100'>
+					<h1 className='text-2xl font-bold text-gray-900'>
 						Dashboard Overview
 					</h1>
-					<p className='text-gray-600 dark:text-gray-400 mt-1'>
+					<p className='text-gray-600 mt-1'>
 						Welcome back! Here's what's happening with your store today.
 					</p>
 				</div>
@@ -97,7 +97,7 @@ const DashboardOverviewScreen: React.FC = () => {
 			<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6'>
 				<StatsCard
 					title='Total Revenue'
-					value={`$${mockAnalytics.totalRevenue.toLocaleString()}`}
+					value={`EGP ${mockAnalytics.totalRevenue.toLocaleString()}`}
 					change={mockAnalytics.revenueGrowth}
 					changeType='increase'
 					icon={DollarSign}
@@ -131,10 +131,10 @@ const DashboardOverviewScreen: React.FC = () => {
 				<div className='lg:col-span-2'>
 					<Card>
 						<div className='flex items-center justify-between mb-4'>
-							<h2 className='text-lg font-semibold text-gray-900 dark:text-gray-100'>
+							<h2 className='text-lg font-semibold text-gray-900'>
 								Recent Orders
 							</h2>
-							<button className='text-sm text-blue-600 dark:text-blue-400 hover:underline'>
+							<button className='text-sm text-blue-600 hover:underline'>
 								View All
 							</button>
 						</div>
@@ -154,7 +154,7 @@ const DashboardOverviewScreen: React.FC = () => {
 				<div className='space-y-6'>
 					<Card>
 						<div className='flex items-center justify-between mb-4'>
-							<h2 className='text-lg font-semibold text-gray-900 dark:text-gray-100'>
+							<h2 className='text-lg font-semibold text-gray-900'>
 								Low Stock Alerts
 							</h2>
 							<AlertTriangle className='h-5 w-5 text-yellow-500' />
@@ -163,14 +163,12 @@ const DashboardOverviewScreen: React.FC = () => {
 							{lowStockProducts.map((product) => (
 								<div
 									key={product.id}
-									className='flex items-center justify-between p-3 bg-red-50 dark:bg-red-900/10 rounded-lg border border-red-200 dark:border-red-800'>
+									className='flex items-center justify-between p-3 bg-red-50 rounded-lg border border-red-200'>
 									<div className='flex-1'>
-										<p className='text-sm font-medium text-gray-900 dark:text-gray-100'>
+										<p className='text-sm font-medium text-gray-900'>
 											{product.name}
 										</p>
-										<p className='text-xs text-gray-500 dark:text-gray-400'>
-											SKU: {product.sku}
-										</p>
+										<p className='text-xs text-gray-500'>SKU: {product.sku}</p>
 									</div>
 									<div className='text-right'>
 										<Badge
@@ -185,7 +183,7 @@ const DashboardOverviewScreen: React.FC = () => {
 								</div>
 							))}
 							{lowStockProducts.length === 0 && (
-								<p className='text-sm text-gray-500 dark:text-gray-400 text-center py-4'>
+								<p className='text-sm text-gray-500 text-center py-4'>
 									All products are well stocked!
 								</p>
 							)}
@@ -195,7 +193,7 @@ const DashboardOverviewScreen: React.FC = () => {
 					{/* Recent Activity */}
 					<Card>
 						<div className='flex items-center justify-between mb-4'>
-							<h2 className='text-lg font-semibold text-gray-900 dark:text-gray-100'>
+							<h2 className='text-lg font-semibold text-gray-900'>
 								Recent Activity
 							</h2>
 							<Activity className='h-5 w-5 text-blue-500' />
@@ -206,7 +204,7 @@ const DashboardOverviewScreen: React.FC = () => {
 									key={notification.id}
 									className={cn(
 										"flex items-start space-x-3 p-3 rounded-lg",
-										!notification.read && "bg-blue-50 dark:bg-blue-900/10"
+										!notification.read && "bg-blue-50"
 									)}>
 									<div className='flex-shrink-0 mt-1'>
 										<Badge
@@ -216,13 +214,13 @@ const DashboardOverviewScreen: React.FC = () => {
 										/>
 									</div>
 									<div className='flex-1 min-w-0'>
-										<p className='text-sm font-medium text-gray-900 dark:text-gray-100'>
+										<p className='text-sm font-medium text-gray-900'>
 											{notification.title}
 										</p>
-										<p className='text-sm text-gray-500 dark:text-gray-400 mt-1'>
+										<p className='text-sm text-gray-500 mt-1'>
 											{notification.message}
 										</p>
-										<div className='flex items-center mt-2 text-xs text-gray-400 dark:text-gray-500'>
+										<div className='flex items-center mt-2 text-xs text-gray-400'>
 											<Clock className='h-3 w-3 mr-1' />
 											{new Date(notification.createdAt).toLocaleDateString()}
 										</div>
@@ -237,7 +235,7 @@ const DashboardOverviewScreen: React.FC = () => {
 			{/* Top Selling Products */}
 			<Card>
 				<div className='flex items-center justify-between mb-6'>
-					<h2 className='text-lg font-semibold text-gray-900 dark:text-gray-100'>
+					<h2 className='text-lg font-semibold text-gray-900'>
 						Top Selling Products
 					</h2>
 					<TrendingUp className='h-5 w-5 text-green-500' />
@@ -246,24 +244,22 @@ const DashboardOverviewScreen: React.FC = () => {
 					{mockAnalytics.topSellingProducts.map((product, index) => (
 						<motion.div
 							key={product.id}
-							className='p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:shadow-md transition-shadow'
+							className='p-4 border border-gray-200 rounded-lg hover:shadow-md transition-shadow'
 							whileHover={{ y: -2 }}
 							initial={{ opacity: 0, y: 20 }}
 							animate={{ opacity: 1, y: 0 }}
 							transition={{ duration: 0.3, delay: index * 0.1 }}>
 							<div className='flex items-center justify-between mb-2'>
-								<span className='text-sm font-medium text-gray-900 dark:text-gray-100'>
+								<span className='text-sm font-medium text-gray-900'>
 									#{index + 1}
 								</span>
 								<Badge variant='success' size='sm'>
 									{product.sales} sold
 								</Badge>
 							</div>
-							<h3 className='font-medium text-gray-900 dark:text-gray-100 mb-2'>
-								{product.name}
-							</h3>
-							<p className='text-lg font-bold text-green-600 dark:text-green-400'>
-								${product.revenue.toLocaleString()}
+							<h3 className='font-medium text-gray-900 mb-2'>{product.name}</h3>
+							<p className='text-lg font-bold text-green-600'>
+								EGP {product.revenue.toLocaleString()}
 							</p>
 						</motion.div>
 					))}

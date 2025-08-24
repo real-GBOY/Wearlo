@@ -8,19 +8,22 @@ import {
 	Navigate,
 } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ThemeProvider } from "./contexts/ThemeContext";
 import { AuthProvider } from "./contexts/AuthContext";
 import { CartProvider } from "./contexts/CartContext";
 import { WishlistProvider } from "./contexts/WishlistContext";
 import { Toaster } from "react-hot-toast";
 import { PageTemplate } from "./components/templates/PageTemplate/PageTemplate";
+import { StripeProvider } from "./components/providers/StripeProvider";
 import {
 	LandingScreen,
 	ProductDetailsScreen,
 	NotFoundScreen,
 	ProductsScreen,
+	CategoriesScreen,
 	UserProfileScreen,
 	CheckoutScreen,
+	SuccessScreen,
+	CancelScreen,
 } from "./screens";
 import AdminDashboardScreen from "./screens/AdminDashboardScreen";
 import { ProtectedRoute, DashboardRedirect, AuthGuard } from "./components";
@@ -57,95 +60,103 @@ const queryClient = new QueryClient({
 function App() {
 	return (
 		<QueryClientProvider client={queryClient}>
-			<ThemeProvider>
-				<Router>
-					<AuthProvider>
-						<CartProvider>
-							<WishlistProvider>
+			<Router>
+				<AuthProvider>
+					<CartProvider>
+						<WishlistProvider>
+							<StripeProvider>
 								<Routes>
-									<Route
-										path='/'
-										element={
-											<PageTemplate>
-												<LandingScreen />
-											</PageTemplate>
-										}
-									/>
-									<Route
-										path='/products'
-										element={
-											<PageTemplate>
-												<ProductsScreen />
-											</PageTemplate>
-										}
-									/>
-									<Route
-										path='/product/:id'
-										element={
-											<PageTemplate>
-												<ProductDetailsScreen />
-											</PageTemplate>
-										}
-									/>
-									<Route path='/login' element={<Navigate to='/' replace />} />
-									<Route path='/signup' element={<Navigate to='/' replace />} />
-									<Route path='/dashboard' element={<DashboardRedirect />} />
-									<Route
-										path='/profile'
-										element={
-											<ProtectedRoute
-												allowedRoles={["admin", "manager", "user"]}>
-												<PageTemplate>
-													<UserProfileScreen />
-												</PageTemplate>
-											</ProtectedRoute>
-										}
-									/>
-									<Route
-										path='/checkout'
-										element={
-											<ProtectedRoute
-												allowedRoles={["admin", "manager", "user"]}>
-												<PageTemplate>
-													<CheckoutScreen />
-												</PageTemplate>
-											</ProtectedRoute>
-										}
-									/>
-									<Route
-										path='/admin/*'
-										element={
-											<ProtectedRoute allowedRoles={["admin", "manager"]}>
-												<AdminDashboardScreen />
-											</ProtectedRoute>
-										}
-									/>
-									<Route
-										path='/manager/*'
-										element={
-											<ProtectedRoute allowedRoles={["admin", "manager"]}>
-												<AdminDashboardScreen />
-											</ProtectedRoute>
-										}
-									/>
-									{/* 404 - Catch all unmatched routes */}
-									<Route path='*' element={<NotFoundScreen />} />
-								</Routes>
-								<Toaster
-									position='top-right'
-									toastOptions={{
-										duration: 4000,
-										style: {
-											background: "#363636",
-											color: "#fff",
-										},
-									}}
+								<Route
+									path='/'
+									element={
+										<PageTemplate>
+											<LandingScreen />
+										</PageTemplate>
+									}
 								/>
-							</WishlistProvider>
-						</CartProvider>
-					</AuthProvider>
-				</Router>
-			</ThemeProvider>
+								<Route
+									path='/products'
+									element={
+										<PageTemplate>
+											<ProductsScreen />
+										</PageTemplate>
+									}
+								/>
+								<Route
+									path='/categories'
+									element={
+										<PageTemplate>
+											<CategoriesScreen />
+										</PageTemplate>
+									}
+								/>
+								<Route
+									path='/product/:id'
+									element={
+										<PageTemplate>
+											<ProductDetailsScreen />
+										</PageTemplate>
+									}
+								/>
+								<Route path='/login' element={<Navigate to='/' replace />} />
+								<Route path='/signup' element={<Navigate to='/' replace />} />
+								<Route path='/dashboard' element={<DashboardRedirect />} />
+								<Route
+									path='/profile'
+									element={
+										<ProtectedRoute allowedRoles={["admin", "manager", "user"]}>
+											<PageTemplate>
+												<UserProfileScreen />
+											</PageTemplate>
+										</ProtectedRoute>
+									}
+								/>
+								<Route
+									path='/checkout'
+									element={
+										<ProtectedRoute allowedRoles={["admin", "manager", "user"]}>
+											<PageTemplate>
+												<CheckoutScreen />
+											</PageTemplate>
+										</ProtectedRoute>
+									}
+								/>
+								<Route path='/success' element={<SuccessScreen />} />
+								<Route path='/cancel' element={<CancelScreen />} />
+								<Route
+									path='/admin/*'
+									element={
+										<ProtectedRoute allowedRoles={["admin", "manager"]}>
+											<AdminDashboardScreen />
+										</ProtectedRoute>
+									}
+								/>
+								<Route
+									path='/manager/*'
+									element={
+										<ProtectedRoute allowedRoles={["admin", "manager"]}>
+											<AdminDashboardScreen />
+										</ProtectedRoute>
+									}
+								/>
+								{/* 404 - Catch all unmatched routes */}
+								<Route path='*' element={<NotFoundScreen />} />
+							</Routes>
+							</StripeProvider>
+							<Toaster
+								position='top-right'
+								toastOptions={{
+									duration: 4000,
+									style: {
+										background: "#ffffff",
+										color: "#374151",
+									},
+								}}
+							/>
+						</WishlistProvider>
+					</CartProvider>
+				</AuthProvider>
+			</Router>
 		</QueryClientProvider>
 	);
 }

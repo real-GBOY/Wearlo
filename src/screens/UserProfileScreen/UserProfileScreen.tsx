@@ -111,7 +111,7 @@ export const UserProfileScreen: React.FC = () => {
 				<Typography variant='h1' className='mb-4'>
 					My Account
 				</Typography>
-				<Typography variant='body' className='text-gray-600 dark:text-gray-400'>
+				<Typography variant='body' className='text-gray-600'>
 					Manage your profile, orders, and preferences
 				</Typography>
 			</motion.div>
@@ -122,15 +122,15 @@ export const UserProfileScreen: React.FC = () => {
 				animate={{ opacity: 1, y: 0 }}
 				transition={{ duration: 0.6, delay: 0.2 }}
 				className='flex justify-center mb-8'>
-				<div className='flex space-x-1 bg-gray-100 dark:bg-gray-800 rounded-lg p-1'>
+				<div className='flex space-x-1 bg-gray-100 rounded-lg p-1'>
 					{tabs.map((tab) => (
 						<button
 							key={tab.id}
 							onClick={() => setActiveTab(tab.id as any)}
 							className={`flex items-center space-x-2 px-4 py-2 rounded-md transition-colors ${
 								activeTab === tab.id
-									? "bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm"
-									: "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+									? "bg-white text-gray-900 shadow-sm"
+									: "text-gray-600 hover:text-gray-900"
 							}`}>
 							<Icon icon={tab.icon} size={18} />
 							<span>{tab.label}</span>
@@ -175,7 +175,7 @@ export const UserProfileScreen: React.FC = () => {
 
 						<div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
 							<div>
-								<label className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2'>
+								<label className='block text-sm font-medium text-gray-700 mb-2'>
 									Full Name
 								</label>
 								<Input
@@ -187,7 +187,7 @@ export const UserProfileScreen: React.FC = () => {
 							</div>
 
 							<div>
-								<label className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2'>
+								<label className='block text-sm font-medium text-gray-700 mb-2'>
 									Email
 								</label>
 								<Input
@@ -200,7 +200,7 @@ export const UserProfileScreen: React.FC = () => {
 							</div>
 
 							<div>
-								<label className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2'>
+								<label className='block text-sm font-medium text-gray-700 mb-2'>
 									Phone
 								</label>
 								<Input
@@ -212,7 +212,7 @@ export const UserProfileScreen: React.FC = () => {
 							</div>
 
 							<div>
-								<label className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2'>
+								<label className='block text-sm font-medium text-gray-700 mb-2'>
 									Country
 								</label>
 								<Input
@@ -224,7 +224,7 @@ export const UserProfileScreen: React.FC = () => {
 							</div>
 
 							<div className='md:col-span-2'>
-								<label className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2'>
+								<label className='block text-sm font-medium text-gray-700 mb-2'>
 									Address
 								</label>
 								<Input
@@ -236,7 +236,7 @@ export const UserProfileScreen: React.FC = () => {
 							</div>
 
 							<div>
-								<label className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2'>
+								<label className='block text-sm font-medium text-gray-700 mb-2'>
 									City
 								</label>
 								<Input
@@ -248,7 +248,7 @@ export const UserProfileScreen: React.FC = () => {
 							</div>
 
 							<div>
-								<label className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2'>
+								<label className='block text-sm font-medium text-gray-700 mb-2'>
 									ZIP Code
 								</label>
 								<Input
@@ -278,7 +278,9 @@ export const UserProfileScreen: React.FC = () => {
 									</div>
 									<div className='text-right'>
 										<Typography variant='h4' className='text-green-600'>
-											${order.total.toFixed(2)}
+											<span className='font-semibold'>
+												EGP {order.total.toFixed(2)}
+											</span>
 										</Typography>
 										<span
 											className={`inline-block px-2 py-1 text-xs rounded-full ${
@@ -298,7 +300,7 @@ export const UserProfileScreen: React.FC = () => {
 										<Typography
 											key={index}
 											variant='body'
-											className='text-gray-600 dark:text-gray-400'>
+											className='text-gray-600'>
 											• {item}
 										</Typography>
 									))}
@@ -322,7 +324,9 @@ export const UserProfileScreen: React.FC = () => {
 									{item.name}
 								</Typography>
 								<Typography variant='h4' className='text-green-600 mb-4'>
-									${item.price.toFixed(2)}
+									<span className='font-semibold'>
+										EGP {item.price.toFixed(2)}
+									</span>
 								</Typography>
 								<Button className='w-full'>Add to Cart</Button>
 							</Card>

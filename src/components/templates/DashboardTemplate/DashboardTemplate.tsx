@@ -22,7 +22,7 @@ const DashboardTemplate: React.FC<DashboardTemplateProps> = ({
 	};
 
 	return (
-		<div className='min-h-screen bg-gray-50 dark:bg-gray-900'>
+		<div className='min-h-screen bg-gray-50'>
 			<div className='flex h-screen'>
 				{/* Sidebar */}
 				<DashboardSidebar

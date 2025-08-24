@@ -21,3 +21,51 @@
 		font-family: "Inter", system-ui, sans-serif;
 	}
 }
+
+@layer utilities {
+	/* Text truncation utilities */
+	.line-clamp-1 {
+		overflow: hidden;
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 1;
+	}
+
+	.line-clamp-2 {
+		overflow: hidden;
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 2;
+	}
+
+	.line-clamp-3 {
+		overflow: hidden;
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 3;
+	}
+
+	/* Mobile-first responsive utilities */
+	.mobile-only {
+		@apply block sm:hidden;
+	}
+
+	.desktop-only {
+		@apply hidden sm:block;
+	}
+
+	/* Better table responsiveness */
+	.table-responsive {
+		@apply overflow-x-auto;
+		-webkit-overflow-scrolling: touch;
+	}
+
+	/* Mobile-friendly spacing */
+	.mobile-padding {
+		@apply px-4 sm:px-6 lg:px-8;
+	}
+
+	.mobile-margin {
+		@apply mx-4 sm:mx-6 lg:mx-8;
+	}
+}

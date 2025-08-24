@@ -140,10 +140,9 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
 					to={item.path}
 					className={cn(
 						"flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors duration-200",
-						"hover:bg-gray-100 dark:hover:bg-gray-700",
-						active &&
-							"bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300",
-						!active && "text-gray-700 dark:text-gray-300",
+						"hover:bg-gray-100",
+						active && "bg-blue-50 text-blue-700",
+						!active && "text-gray-700",
 						level > 0 && "ml-6",
 						isCollapsed && level === 0 && "justify-center"
 					)}
@@ -156,9 +155,7 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
 						className={cn(
 							"h-5 w-5",
 							level === 0 && !isCollapsed && "mr-3",
-							active
-								? "text-blue-600 dark:text-blue-400"
-								: "text-gray-500 dark:text-gray-400"
+							active ? "text-blue-600" : "text-gray-500"
 						)}
 					/>
 					{(!isCollapsed || level > 0) && (
@@ -191,19 +188,17 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
 										to={subItem.path}
 										className={cn(
 											"flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors duration-200",
-											"hover:bg-gray-100 dark:hover:bg-gray-700",
-											isActive(subItem.path) &&
-												"bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300",
-											!isActive(subItem.path) &&
-												"text-gray-600 dark:text-gray-400",
+											"hover:bg-gray-100",
+											isActive(subItem.path) && "bg-blue-50 text-blue-700",
+											!isActive(subItem.path) && "text-gray-600",
 											"ml-6"
 										)}>
 										<subItem.icon
 											className={cn(
 												"h-4 w-4 mr-3",
 												isActive(subItem.path)
-													? "text-blue-600 dark:text-blue-400"
-													: "text-gray-500 dark:text-gray-400"
+													? "text-blue-600"
+													: "text-gray-500"
 											)}
 										/>
 										<span>{subItem.label}</span>
@@ -220,7 +215,7 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
 	return (
 		<motion.div
 			className={cn(
-				"bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 h-full flex flex-col",
+				"bg-white border-r border-gray-200 h-full flex flex-col",
 				isCollapsed ? "w-16" : "w-64",
 				"transition-all duration-300 ease-in-out",
 				className
@@ -228,24 +223,22 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
 			initial={false}
 			animate={{ width: isCollapsed ? 64 : 256 }}>
 			{/* Header */}
-			<div className='flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700'>
+			<div className='flex items-center justify-between p-4 border-b border-gray-200'>
 				{!isCollapsed && (
 					<motion.div
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
 						transition={{ delay: 0.1 }}>
-						<h1 className='text-xl font-bold text-gray-900 dark:text-gray-100'>
-							Wearlo Admin
-						</h1>
+						<h1 className='text-xl font-bold text-gray-900'>Wearlo Admin</h1>
 					</motion.div>
 				)}
 				<button
 					onClick={onToggle}
-					className='p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors'>
+					className='p-2 rounded-lg hover:bg-gray-100 transition-colors'>
 					{isCollapsed ? (
-						<ChevronRight className='h-5 w-5 text-gray-600 dark:text-gray-400' />
+						<ChevronRight className='h-5 w-5 text-gray-600' />
 					) : (
-						<ChevronDown className='h-5 w-5 text-gray-600 dark:text-gray-400' />
+						<ChevronDown className='h-5 w-5 text-gray-600' />
 					)}
 				</button>
 			</div>
@@ -256,12 +249,12 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
 			</nav>
 
 			{/* Footer */}
-			<div className='p-4 border-t border-gray-200 dark:border-gray-700'>
+			<div className='p-4 border-t border-gray-200'>
 				<Link
 					to='/'
 					className={cn(
 						"flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors duration-200",
-						"hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-400",
+						"hover:bg-gray-100 text-gray-600",
 						isCollapsed && "justify-center"
 					)}>
 					<Home className={cn("h-5 w-5", !isCollapsed && "mr-3")} />

@@ -381,7 +381,7 @@ export const mockNotifications: Notification[] = [
 	{
 		id: "notif-4",
 		title: "Revenue Milestone",
-		message: "Monthly revenue target achieved! $12,589.93",
+		message: "Monthly revenue target achieved! EGP 12,589.93",
 		type: "success",
 		read: true,
 		createdAt: "2024-01-21T23:59:00Z",

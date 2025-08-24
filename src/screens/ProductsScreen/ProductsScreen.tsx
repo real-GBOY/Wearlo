@@ -1,8 +1,9 @@
 /** @format */
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import { Search, Filter, Grid, List } from "lucide-react";
+import { useSearchParams } from "react-router-dom";
 import { ProductCard } from "../../components/molecules/ProductCard/ProductCard";
 import { Typography } from "../../components/atoms/Typography/Typography";
 import { Input } from "../../components/atoms/Input/Input";
@@ -10,15 +11,34 @@ import Select from "../../components/atoms/Select/Select";
 import { Button } from "../../components/atoms/Button/Button";
 import { Icon } from "../../components/atoms/Icon/Icon";
 import { useProducts, useCategories } from "../../hooks";
-import { Product } from "../../services/productService";
+import { Product } from "../../types";
 
 export const ProductsScreen: React.FC = () => {
+	const [searchParams, setSearchParams] = useSearchParams();
 	const [searchTerm, setSearchTerm] = useState("");
-	const [selectedCategory, setSelectedCategory] = useState("all");
+	const [selectedCategory, setSelectedCategory] = useState(() => {
+		// Initialize category from URL params
+		const categoryFromUrl = searchParams.get("category");
+		return categoryFromUrl || "all";
+	});
 	const [sortBy, setSortBy] = useState("name");
 	const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
 	const [currentPage, setCurrentPage] = useState(1);
 	const itemsPerPage = 12;
+
+	// Reset to first page when filters change
+	const resetToFirstPage = () => {
+		setCurrentPage(1);
+	};
+
+	// Debounced search to improve performance
+	const debouncedSearch = useCallback((value: string) => {
+		const timeoutId = setTimeout(() => {
+			setSearchTerm(value);
+			resetToFirstPage();
+		}, 300);
+		return () => clearTimeout(timeoutId);
+	}, []);
 
 	// Fetch data from backend
 	const {
@@ -36,26 +56,107 @@ export const ProductsScreen: React.FC = () => {
 	const products = productsData?.items || [];
 	const categories = categoriesData || [];
 
+	// Function to get category display name for the current filter
+	const getCategoryDisplayName = useCallback(
+		(categoryId: string) => {
+			const category = categories.find(
+				(cat) => cat._id === categoryId || cat.name === categoryId
+			);
+			return category?.name || categoryId;
+		},
+		[categories]
+	);
+
+	// Debug logging
+	useEffect(() => {
+		console.log("Products data:", products);
+		console.log("Categories data:", categories);
+	}, [products, categories]);
+
+	// Update URL when category filter changes
+	useEffect(() => {
+		if (selectedCategory === "all") {
+			searchParams.delete("category");
+		} else {
+			searchParams.set("category", selectedCategory);
+		}
+		setSearchParams(searchParams);
+	}, [selectedCategory, searchParams, setSearchParams]);
+
 	// Get unique categories for filtering
 	const categoryOptions = useMemo(() => {
 		if (!categories.length) return ["all"];
-		const uniqueCategories = [...new Set(categories.map((cat) => cat.name))];
-		return ["all", ...uniqueCategories];
+		// Include both category names and IDs for filtering
+		const categoryOptions = categories.map((cat) => ({
+			value: cat.name,
+			label: cat.name,
+			id: cat._id,
+		}));
+		console.log("Available categories for filter:", categoryOptions);
+		return ["all", ...categoryOptions.map((cat) => cat.value)];
 	}, [categories]);
 
 	// Filter and sort products
 	const filteredProducts = useMemo(() => {
 		if (!products.length) return [];
 
+		console.log("Filtering products:", {
+			searchTerm,
+			selectedCategory,
+			sortBy,
+			totalProducts: products.length,
+		});
+
 		let filtered = products.filter((product: Product) => {
+			// Search filter
 			const matchesSearch =
 				product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
 				product.description.toLowerCase().includes(searchTerm.toLowerCase());
-			const matchesCategory =
-				selectedCategory === "all" ||
-				(product.categoryName || product.category) === selectedCategory;
+
+			// Category filter - handle both category ID and categoryName
+			let matchesCategory = false;
+			if (selectedCategory === "all") {
+				matchesCategory = true;
+			} else {
+				// Check if product has categoryName that matches
+				if (product.categoryName && product.categoryName === selectedCategory) {
+					matchesCategory = true;
+				}
+				// Check if product category object has name that matches
+				else if (
+					typeof product.category === "object" &&
+					product.category?.name === selectedCategory
+				) {
+					matchesCategory = true;
+				}
+				// Check if product category is a string ID that matches
+				else if (
+					typeof product.category === "string" &&
+					product.category === selectedCategory
+				) {
+					matchesCategory = true;
+				}
+				// Check if product category object has ID that matches
+				else if (
+					typeof product.category === "object" &&
+					product.category?._id === selectedCategory
+				) {
+					matchesCategory = true;
+				}
+			}
+
+			console.log(`Product "${product.name}":`, {
+				searchMatch: matchesSearch,
+				categoryMatch: matchesCategory,
+				productCategory: product.category,
+				productCategoryName: product.categoryName,
+				selectedCategory,
+			});
+
 			return matchesSearch && matchesCategory;
 		});
+
+		console.log("Filtered products count:", filtered.length);
 
 		// Sort products
 		switch (sortBy) {
@@ -121,9 +222,7 @@ export const ProductsScreen: React.FC = () => {
 					<Typography variant='h1' className='mb-4'>
 						Loading...
 					</Typography>
-					<Typography
-						variant='body'
-						className='text-gray-600 dark:text-gray-400'>
+					<Typography variant='body' className='text-gray-600'>
 						Please wait while we fetch the latest products and categories.
 					</Typography>
 				</div>
@@ -139,9 +238,7 @@ export const ProductsScreen: React.FC = () => {
 					<Typography variant='h1' className='mb-4 text-red-600'>
 						Error Loading Data
 					</Typography>
-					<Typography
-						variant='body'
-						className='text-gray-600 dark:text-gray-400'>
+					<Typography variant='body' className='text-gray-600'>
 						{productsError
 							? "Failed to load products."
 							: "Failed to load categories."}
@@ -163,9 +260,7 @@ export const ProductsScreen: React.FC = () => {
 				<Typography variant='h1' className='mb-4'>
 					Our Collection
 				</Typography>
-				<Typography
-					variant='body'
-					className='max-w-2xl mx-auto text-gray-600 dark:text-gray-400'>
+				<Typography variant='body' className='max-w-2xl mx-auto text-gray-600'>
 					Discover our curated selection of timeless pieces designed for the
 					modern individual
 				</Typography>
@@ -177,6 +272,35 @@ export const ProductsScreen: React.FC = () => {
 				animate={{ opacity: 1, y: 0 }}
 				transition={{ duration: 0.6, delay: 0.2 }}
 				className='mb-8 space-y-4'>
+				{/* Active Filters Indicator */}
+				{(searchTerm || selectedCategory !== "all" || sortBy !== "name") && (
+					<div className='flex items-center gap-2 text-sm text-blue-600 bg-blue-50 px-4 py-2 rounded-lg'>
+						<Filter size={16} />
+						<span>Active filters:</span>
+						{searchTerm && (
+							<span className='bg-blue-100 px-2 py-1 rounded'>
+								Search: "{searchTerm}"
+							</span>
+						)}
+						{selectedCategory !== "all" && (
+							<span className='bg-blue-100 px-2 py-1 rounded'>
+								Category: {selectedCategory}
+							</span>
+						)}
+						{sortBy !== "name" && (
+							<span className='bg-blue-100 px-2 py-1 rounded'>
+								Sort:{" "}
+								{sortBy === "price-low"
+									? "Price: Low to High"
+									: sortBy === "price-high"
+									? "Price: High to Low"
+									: sortBy === "newest"
+									? "Newest First"
+									: sortBy}
+							</span>
+						)}
+					</div>
+				)}
 				<div className='flex flex-col lg:flex-row gap-4 items-center justify-between'>
 					{/* Search */}
 					<div className='relative flex-1 max-w-md'>
@@ -189,7 +313,16 @@ export const ProductsScreen: React.FC = () => {
 							type='text'
 							placeholder='Search products...'
 							value={searchTerm}
-							onChange={(e) => setSearchTerm(e.target.value)}
+							onChange={(e) => {
+								const value = e.target.value;
+								setSearchTerm(value);
+								// Use debounced search for better performance
+								if (value.length === 0) {
+									resetToFirstPage();
+								} else {
+									debouncedSearch(value);
+								}
+							}}
 							className='pl-10'
 						/>
 					</div>
@@ -204,7 +337,10 @@ export const ProductsScreen: React.FC = () => {
 									: category.charAt(0).toUpperCase() + category.slice(1),
 						}))}
 						value={selectedCategory}
-						onChange={setSelectedCategory}
+						onChange={(value) => {
+							setSelectedCategory(value);
+							resetToFirstPage();
+						}}
 						className='min-w-[150px]'
 					/>
 
@@ -217,18 +353,21 @@ export const ProductsScreen: React.FC = () => {
 							{ value: "newest", label: "Newest First" },
 						]}
 						value={sortBy}
-						onChange={setSortBy}
+						onChange={(value) => {
+							setSortBy(value);
+							resetToFirstPage();
+						}}
 						className='min-w-[150px]'
 					/>
 
 					{/* View Mode Toggle */}
-					<div className='flex items-center space-x-2 border border-gray-300 dark:border-gray-600 rounded-lg p-1'>
+					<div className='flex items-center space-x-2 border border-gray-300 rounded-lg p-1'>
 						<button
 							onClick={() => setViewMode("grid")}
 							className={`p-2 rounded-md transition-colors ${
 								viewMode === "grid"
-									? "bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white"
-									: "text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
+									? "bg-gray-200 text-gray-900"
+									: "text-gray-500 hover:text-gray-700"
 							}`}>
 							<Grid size={18} />
 						</button>
@@ -236,17 +375,53 @@ export const ProductsScreen: React.FC = () => {
 							onClick={() => setViewMode("list")}
 							className={`p-2 rounded-md transition-colors ${
 								viewMode === "list"
-									? "bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white"
-									: "text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
+									? "bg-gray-200 text-gray-900"
+									: "text-gray-500 hover:text-gray-700"
 							}`}>
 							<List size={18} />
 						</button>
 					</div>
+
+					{/* Reset Filters Button */}
+					{(searchTerm || selectedCategory !== "all" || sortBy !== "name") && (
+						<Button
+							variant='outline'
+							onClick={() => {
+								setSearchTerm("");
+								setSelectedCategory("all");
+								setSortBy("name");
+								setCurrentPage(1);
+							}}
+							className='min-w-[120px]'>
+							Reset Filters
+						</Button>
+					)}
 				</div>
 
+				{/* Current Category Display */}
+				{selectedCategory !== "all" && (
+					<div className='mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg'>
+						<Typography variant='body' className='text-blue-800'>
+							Currently viewing:{" "}
+							<span className='font-semibold'>
+								{getCategoryDisplayName(selectedCategory)}
+							</span>
+						</Typography>
+					</div>
+				)}
+
 				{/* Results Count */}
-				<div className='text-sm text-gray-600 dark:text-gray-400'>
-					Showing {filteredProducts.length} of {products.length} products
+				<div className='text-sm text-gray-600'>
+					{searchTerm || selectedCategory !== "all" ? (
+						<>
+							Showing {filteredProducts.length} of {products.length} products
+							{filteredProducts.length !== products.length && (
+								<span className='ml-2 text-blue-600'>(Filtered results)</span>
+							)}
+						</>
+					) : (
+						`Showing ${filteredProducts.length} products`
+					)}
 				</div>
 			</motion.div>
 
@@ -318,11 +493,26 @@ export const ProductsScreen: React.FC = () => {
 					<Typography variant='h3' className='mb-2'>
 						No products found
 					</Typography>
-					<Typography
-						variant='body'
-						className='text-gray-600 dark:text-gray-400'>
-						Try adjusting your search terms or filters
+					<Typography variant='body' className='text-gray-600 mb-4'>
+						{searchTerm || selectedCategory !== "all" ? (
+							<>Try adjusting your search terms or filters</>
+						) : (
+							<>No products are currently available</>
+						)}
 					</Typography>
+					{(searchTerm || selectedCategory !== "all") && (
+						<Button
+							variant='outline'
+							onClick={() => {
+								setSearchTerm("");
+								setSelectedCategory("all");
+								setSortBy("name");
+								setCurrentPage(1);
+							}}
+							className='mt-4'>
+							Clear All Filters
+						</Button>
+					)}
 				</motion.div>
 			)}
 		</div>

@@ -1,12 +1,13 @@
 /** @format */
 
 import React, { createContext, useContext, useReducer, useEffect } from "react";
-import { CartItem, Product } from "../types";
+import { CartItem, Product, Order } from "../types";
 
 interface CartState {
 	items: CartItem[];
 	total: number;
 	itemCount: number;
+	orders: Order[];
 }
 
 type CartAction =
@@ -17,12 +18,14 @@ type CartAction =
 			payload: { productId: string; quantity: number };
 	  }
 	| { type: "CLEAR_CART" }
-	| { type: "LOAD_CART"; payload: CartItem[] };
+	| { type: "LOAD_CART"; payload: CartItem[] }
+	| { type: "ADD_ORDER"; payload: Order };
 
 const initialState: CartState = {
 	items: [],
 	total: 0,
 	itemCount: 0,
+	orders: [],
 };
 
 const cartReducer = (state: CartState, action: CartAction): CartState => {
@@ -73,6 +76,12 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
 		case "LOAD_CART":
 			return calculateCartTotals(action.payload);
 
+		case "ADD_ORDER":
+			return {
+				...state,
+				orders: [...state.orders, action.payload],
+			};
+
 		default:
 			return state;
 	}
@@ -85,7 +94,7 @@ const calculateCartTotals = (items: CartItem[]): CartState => {
 	);
 	const itemCount = items.reduce((sum, item) => sum + item.quantity, 0);
 
-	return { items, total, itemCount };
+	return { items, total, itemCount, orders: [] };
 };
 
 interface CartContextType {
@@ -96,6 +105,7 @@ interface CartContextType {
 	clearCart: () => void;
 	isInCart: (productId: string) => boolean;
 	getItemQuantity: (productId: string) => number;
+	addOrder: (order: Order) => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -147,6 +157,10 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 		dispatch({ type: "CLEAR_CART" });
 	};
 
+	const addOrder = (order: Order) => {
+		dispatch({ type: "ADD_ORDER", payload: order });
+	};
+
 	const isInCart = (productId: string): boolean => {
 		return state.items.some((item) => item.id === productId);
 	};
@@ -166,6 +180,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 				clearCart,
 				isInCart,
 				getItemQuantity,
+				addOrder,
 			}}>
 			{children}
 		</CartContext.Provider>

@@ -34,7 +34,7 @@ export const FeaturedProducts: React.FC = () => {
 	// Loading state
 	if (isLoading) {
 		return (
-			<section className='py-20 bg-white dark:bg-black transition-colors'>
+			<section className='py-20 bg-white transition-colors'>
 				<div className='container mx-auto px-6'>
 					<div className='text-center'>
 						<Typography variant='h2' className='mb-4'>
@@ -49,7 +49,7 @@ export const FeaturedProducts: React.FC = () => {
 	// Error state
 	if (error) {
 		return (
-			<section className='py-20 bg-white dark:bg-black transition-colors'>
+			<section className='py-20 bg-white transition-colors'>
 				<div className='container mx-auto px-6'>
 					<div className='text-center'>
 						<Typography variant='h2' className='mb-4 text-red-600'>
@@ -67,7 +67,7 @@ export const FeaturedProducts: React.FC = () => {
 	// No featured products
 	if (featuredProducts.length === 0) {
 		return (
-			<section className='py-20 bg-white dark:bg-black transition-colors'>
+			<section className='py-20 bg-white transition-colors'>
 				<div className='container mx-auto px-6'>
 					<div className='text-center'>
 						<Typography variant='h2' className='mb-4'>
@@ -83,7 +83,7 @@ export const FeaturedProducts: React.FC = () => {
 	}
 
 	return (
-		<section className='py-20 bg-white dark:bg-black transition-colors'>
+		<section className='py-20 bg-white transition-colors'>
 			<div className='container mx-auto px-6'>
 				<motion.div
 					initial={{ opacity: 0, y: 30 }}

@@ -30,14 +30,14 @@ const StatsCard: React.FC<StatsCardProps> = ({
 	};
 
 	const getChangeColor = (changeValue: number) => {
-		if (changeValue >= 0) return "text-green-600 dark:text-green-400";
-		return "text-red-600 dark:text-red-400";
+		if (changeValue >= 0) return "text-green-600";
+		return "text-red-600";
 	};
 
 	return (
 		<motion.div
 			className={cn(
-				"bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6",
+				"bg-white rounded-lg border border-gray-200 p-6",
 				"hover:shadow-lg transition-all duration-200",
 				className
 			)}
@@ -47,24 +47,20 @@ const StatsCard: React.FC<StatsCardProps> = ({
 			transition={{ duration: 0.3 }}>
 			<div className='flex items-center justify-between'>
 				<div className='flex-1'>
-					<p className='text-sm font-medium text-gray-600 dark:text-gray-400 mb-1'>
-						{title}
-					</p>
-					<p className='text-2xl font-bold text-gray-900 dark:text-gray-100'>
-						{value}
-					</p>
+					<p className='text-sm font-medium text-gray-600 mb-1'>{title}</p>
+					<p className='text-2xl font-bold text-gray-900'>{value}</p>
 					{change !== undefined && (
 						<div className='flex items-center mt-2'>
 							{changeType === "increase" ? (
-								<TrendingUp className='h-4 w-4 text-green-600 dark:text-green-400 mr-1' />
+								<TrendingUp className='h-4 w-4 text-green-600 mr-1' />
 							) : (
-								<TrendingDown className='h-4 w-4 text-red-600 dark:text-red-400 mr-1' />
+								<TrendingDown className='h-4 w-4 text-red-600 mr-1' />
 							)}
 							<span
 								className={cn("text-sm font-medium", getChangeColor(change))}>
 								{formatChange(change)}
 							</span>
-							<span className='text-sm text-gray-500 dark:text-gray-400 ml-1'>
+							<span className='text-sm text-gray-500 ml-1'>
 								from last month
 							</span>
 						</div>
@@ -72,7 +68,7 @@ const StatsCard: React.FC<StatsCardProps> = ({
 				</div>
 				<div
 					className={cn(
-						"p-3 rounded-full bg-gray-50 dark:bg-gray-700",
+						"p-3 rounded-full bg-gray-50",
 						iconColor
 							.replace("text-", "bg-")
 							.replace("-600", "-100")

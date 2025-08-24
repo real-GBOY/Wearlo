@@ -21,3 +21,18 @@ export const useProduct = (id: string) => {
 		gcTime: 10 * 60 * 1000, // 10 minutes
 	});
 };
+
+export const useRelatedProducts = (
+	categoryId: string,
+	currentProductId: string,
+	limit: number = 4
+) => {
+	return useQuery({
+		queryKey: ["relatedProducts", categoryId, currentProductId, limit],
+		queryFn: () =>
+			productService.getRelatedByCategory(categoryId, currentProductId, limit),
+		enabled: !!categoryId && !!currentProductId,
+		staleTime: 5 * 60 * 1000, // 5 minutes
+		gcTime: 10 * 60 * 1000, // 10 minutes
+	});
+};

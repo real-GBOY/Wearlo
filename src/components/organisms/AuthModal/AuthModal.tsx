@@ -118,7 +118,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 							stiffness: 300,
 							damping: 30,
 						}}
-						className='relative w-full max-w-md bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden'
+						className='relative w-full max-w-md bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden'
 						onClick={(e) => e.stopPropagation()}>
 						{/* Close Button */}
 						<motion.button
@@ -126,7 +126,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 							animate={{ opacity: 1, scale: 1 }}
 							transition={{ delay: 0.2, duration: 0.2 }}
 							onClick={handleClose}
-							className='absolute top-4 right-4 z-10 p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full'>
+							className='absolute top-4 right-4 z-10 p-2 text-gray-400 hover:text-gray-600 transition-colors duration-200 hover:bg-gray-100 rounded-full'>
 							<X size={20} />
 						</motion.button>
 
@@ -141,21 +141,21 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 										initial={{ scale: 0 }}
 										animate={{ scale: 1 }}
 										transition={{ delay: 0.1, type: "spring" }}
-										className='mx-auto w-16 h-16 bg-green-100 dark:bg-green-900/20 rounded-full flex items-center justify-center'>
-										<CheckCircle className='w-8 h-8 text-green-600 dark:text-green-400' />
+										className='mx-auto w-16 h-16 bg-green-100 rounded-full flex items-center justify-center'>
+										<CheckCircle className='w-8 h-8 text-green-600' />
 									</motion.div>
 									<motion.h2
 										initial={{ opacity: 0, y: 10 }}
 										animate={{ opacity: 1, y: 0 }}
 										transition={{ delay: 0.2 }}
-										className='text-2xl font-bold text-gray-900 dark:text-white'>
+										className='text-2xl font-bold text-gray-900'>
 										{mode === "login" ? "Welcome Back!" : "Account Created!"}
 									</motion.h2>
 									<motion.p
 										initial={{ opacity: 0, y: 10 }}
 										animate={{ opacity: 1, y: 0 }}
 										transition={{ delay: 0.3 }}
-										className='text-gray-600 dark:text-gray-400'>
+										className='text-gray-600'>
 										{mode === "login"
 											? "You have successfully signed in to your account."
 											: "Your account has been created successfully. Welcome to Wearlo!"}
@@ -177,7 +177,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 							initial={{ opacity: 0 }}
 							animate={{ opacity: 1 }}
 							transition={{ delay: 0.4 }}
-							className='absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 dark:from-gray-700 dark:via-gray-600 dark:to-gray-700'
+							className='absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200'
 						/>
 					</motion.div>
 				</motion.div>

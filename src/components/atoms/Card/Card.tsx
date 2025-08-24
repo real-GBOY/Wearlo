@@ -34,7 +34,7 @@ const Card: React.FC<CardProps> = ({
 	return (
 		<motion.div
 			className={cn(
-				"bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700",
+				"bg-white rounded-lg border border-gray-200",
 				paddingClasses[padding],
 				shadowClasses[shadow],
 				hover && "transition-all duration-200 ease-in-out",

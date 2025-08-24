@@ -13,29 +13,30 @@ export interface Product {
 	price: number;
 	discount?: number;
 	stock: number;
-	category: string;
-	sizes: ProductSize[];
+	category:
+		| string
+		| { _id: string; name: string; description?: string; image?: string }; // This can be category ID or full category object
+	categoryName?: string; // This will be the category name for display
+	sizes: StockSize[];
 	images: string[];
 	createdAt: string;
 	updatedAt?: string;
 	__v?: number;
 	featured?: boolean;
+	lowStockThreshold?: number; // Added for stock management
+	sku?: string; // Added for inventory tracking
+	status?: "active" | "inactive" | "draft"; // Added for product status
 }
 
 export interface CartItem extends Product {
 	quantity: number;
 }
 
-export type Theme = "light" | "dark";
-
 // Dashboard-specific product type
 export interface DashboardProduct extends Product {
-	stock: number;
 	lowStockThreshold: number;
 	sku: string;
 	status: "active" | "inactive" | "draft";
-	createdAt: string;
-	updatedAt: string;
 }
 
 // Address interface
@@ -131,4 +132,91 @@ export interface InventoryHistory {
 	reason: string;
 	date: string;
 	userId: string;
+}
+
+// Enhanced stock management types
+export interface StockSize {
+	label: string;
+	stock: number;
+	measurements?: {
+		chest?: number;
+		length?: number;
+		sleeve?: number;
+		waist?: number;
+	};
+}
+
+export interface StockOverview {
+	productId: string;
+	name: string;
+	category: string;
+	totalStock: number;
+	sizeStock: StockSize[];
+	stockStatus: "In Stock" | "Out of Stock" | "Low Stock";
+	lowStock: boolean;
+	lastUpdated: string;
+}
+
+export interface StockAlert {
+	productId: string;
+	name: string;
+	category: string;
+	totalStock: number;
+	lowStockSizes: StockSize[];
+	alertLevel: "Out of Stock" | "Low Stock";
+	threshold: number;
+}
+
+export interface StockAvailabilityRequest {
+	items: {
+		productId: string;
+		size?: string;
+		quantity: number;
+	}[];
+}
+
+export interface StockAvailabilityResponse {
+	allAvailable: boolean;
+	items: {
+		productId: string;
+		productName: string;
+		size: string;
+		requestedQuantity: number;
+		availableStock: number;
+		stockSource: string;
+		available: boolean;
+		shortfall: number;
+	}[];
+	canPlaceOrder: boolean;
+	message: string;
+}
+
+export interface StockUpdateRequest {
+	stock: number;
+	operation: "add" | "subtract" | "set";
+	reason?: string;
+	size?: string;
+}
+
+export interface StockHistory {
+	id: string;
+	productId: string;
+	productName: string;
+	change: number;
+	type: "in" | "out" | "adjustment";
+	reason: string;
+	date: string;
+	userId: string;
+	size?: string;
+	oldStock: number;
+	newStock: number;
+}
+
+export interface StockStats {
+	totalProducts: number;
+	inStock: number;
+	outOfStock: number;
+	lowStock: number;
+	totalValue: number;
+	lowStockThreshold: number;
 }

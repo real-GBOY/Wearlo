@@ -118,28 +118,28 @@ export const CustomersManagementScreen: React.FC = () => {
 		switch (status) {
 			case "active":
 				return (
-					<span className='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'>
+					<span className='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800'>
 						<CheckCircle className='w-3 h-3 mr-1' />
 						Active
 					</span>
 				);
 			case "inactive":
 				return (
-					<span className='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200'>
+					<span className='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800'>
 						<XCircle className='w-3 h-3 mr-1' />
 						Inactive
 					</span>
 				);
 			case "suspended":
 				return (
-					<span className='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'>
+					<span className='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800'>
 						<AlertCircle className='w-3 h-3 mr-1' />
 						Suspended
 					</span>
 				);
 			default:
 				return (
-					<span className='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200'>
+					<span className='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800'>
 						Unknown
 					</span>
 				);
@@ -151,28 +151,28 @@ export const CustomersManagementScreen: React.FC = () => {
 		switch (role) {
 			case "admin":
 				return (
-					<span className='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200'>
+					<span className='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800'>
 						<Shield className='w-3 h-3 mr-1' />
 						Admin
 					</span>
 				);
 			case "moderator":
 				return (
-					<span className='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200'>
+					<span className='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800'>
 						<UserCheck className='w-3 h-3 mr-1' />
 						Moderator
 					</span>
 				);
 			case "customer":
 				return (
-					<span className='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'>
+					<span className='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800'>
 						<Users className='w-3 h-3 mr-1' />
 						Customer
 					</span>
 				);
 			default:
 				return (
-					<span className='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200'>
+					<span className='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800'>
 						Unknown
 					</span>
 				);
@@ -194,9 +194,7 @@ export const CustomersManagementScreen: React.FC = () => {
 				<Typography variant='h3' className='text-red-600 mb-4'>
 					Error loading users
 				</Typography>
-				<Typography
-					variant='body'
-					className='text-gray-600 dark:text-gray-400 mb-4'>
+				<Typography variant='body' className='text-gray-600 mb-4'>
 					{error.message}
 				</Typography>
 				<Button onClick={() => refetch()} variant='outline'>
@@ -215,9 +213,7 @@ export const CustomersManagementScreen: React.FC = () => {
 					<Typography variant='h1' className='mb-2'>
 						Customer Management
 					</Typography>
-					<Typography
-						variant='body'
-						className='text-gray-600 dark:text-gray-400'>
+					<Typography variant='body' className='text-gray-600'>
 						Manage all system users, their roles, and account status
 					</Typography>
 				</div>
@@ -240,20 +236,16 @@ export const CustomersManagementScreen: React.FC = () => {
 						initial={{ opacity: 0, y: 20 }}
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ duration: 0.3 }}
-						className='bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm border border-gray-200 dark:border-gray-700'>
+						className='bg-white rounded-lg p-6 shadow-sm border border-gray-200'>
 						<div className='flex items-center'>
-							<div className='p-2 bg-blue-100 dark:bg-blue-900 rounded-lg'>
-								<Users className='w-6 h-6 text-blue-600 dark:text-blue-400' />
+							<div className='p-2 bg-blue-100 rounded-lg'>
+								<Users className='w-6 h-6 text-blue-600' />
 							</div>
 							<div className='ml-4'>
-								<Typography
-									variant='h3'
-									className='text-gray-900 dark:text-white'>
+								<Typography variant='h3' className='text-gray-900'>
 									{userStats.totalUsers}
 								</Typography>
-								<Typography
-									variant='body'
-									className='text-gray-600 dark:text-gray-400'>
+								<Typography variant='body' className='text-gray-600'>
 									Total Users
 								</Typography>
 							</div>
@@ -264,20 +256,16 @@ export const CustomersManagementScreen: React.FC = () => {
 						initial={{ opacity: 0, y: 20 }}
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ duration: 0.3, delay: 0.1 }}
-						className='bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm border border-gray-200 dark:border-gray-700'>
+						className='bg-white rounded-lg p-6 shadow-sm border border-gray-200'>
 						<div className='flex items-center'>
-							<div className='p-2 bg-green-100 dark:bg-green-900 rounded-lg'>
-								<UserCheck className='w-6 h-6 text-green-600 dark:text-green-400' />
+							<div className='p-2 bg-green-100 rounded-lg'>
+								<UserCheck className='w-6 h-6 text-green-600' />
 							</div>
 							<div className='ml-4'>
-								<Typography
-									variant='h3'
-									className='text-gray-900 dark:text-white'>
+								<Typography variant='h3' className='text-gray-900'>
 									{userStats.activeUsers}
 								</Typography>
-								<Typography
-									variant='body'
-									className='text-gray-600 dark:text-gray-400'>
+								<Typography variant='body' className='text-gray-600'>
 									Active Users
 								</Typography>
 							</div>
@@ -288,20 +276,16 @@ export const CustomersManagementScreen: React.FC = () => {
 						initial={{ opacity: 0, y: 20 }}
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ duration: 0.3, delay: 0.2 }}
-						className='bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm border border-gray-200 dark:border-gray-700'>
+						className='bg-white rounded-lg p-6 shadow-sm border border-gray-200'>
 						<div className='flex items-center'>
-							<div className='p-2 bg-purple-100 dark:bg-purple-900 rounded-lg'>
-								<Shield className='w-6 h-6 text-purple-600 dark:text-purple-400' />
+							<div className='p-2 bg-purple-100 rounded-lg'>
+								<Shield className='w-6 h-6 text-purple-600' />
 							</div>
 							<div className='ml-4'>
-								<Typography
-									variant='h3'
-									className='text-gray-900 dark:text-white'>
+								<Typography variant='h3' className='text-gray-900'>
 									{userStats.admins}
 								</Typography>
-								<Typography
-									variant='body'
-									className='text-gray-600 dark:text-gray-400'>
+								<Typography variant='body' className='text-gray-600'>
 									Administrators
 								</Typography>
 							</div>
@@ -312,20 +296,16 @@ export const CustomersManagementScreen: React.FC = () => {
 						initial={{ opacity: 0, y: 20 }}
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ duration: 0.3, delay: 0.3 }}
-						className='bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm border border-gray-200 dark:border-gray-700'>
+						className='bg-white rounded-lg p-6 shadow-sm border border-gray-200'>
 						<div className='flex items-center'>
-							<div className='p-2 bg-orange-100 dark:bg-orange-900 rounded-lg'>
-								<Users className='w-6 h-6 text-orange-600 dark:text-orange-400' />
+							<div className='p-2 bg-orange-100 rounded-lg'>
+								<Users className='w-6 h-6 text-orange-600' />
 							</div>
 							<div className='ml-4'>
-								<Typography
-									variant='h3'
-									className='text-gray-900 dark:text-white'>
+								<Typography variant='h3' className='text-gray-900'>
 									{userStats.customers}
 								</Typography>
-								<Typography
-									variant='body'
-									className='text-gray-600 dark:text-gray-400'>
+								<Typography variant='body' className='text-gray-600'>
 									Customers
 								</Typography>
 							</div>

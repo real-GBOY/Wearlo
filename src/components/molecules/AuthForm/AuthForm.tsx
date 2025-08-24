@@ -124,14 +124,14 @@ export const AuthForm: React.FC<AuthFormProps> = ({
 					initial={{ opacity: 0, y: -10 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ delay: 0.1 }}
-					className='text-3xl font-bold text-gray-900 dark:text-white'>
+					className='text-3xl font-bold text-gray-900'>
 					{mode === "login" ? "Welcome Back" : "Create Account"}
 				</motion.h1>
 				<motion.p
 					initial={{ opacity: 0, y: -5 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ delay: 0.2 }}
-					className='text-gray-600 dark:text-gray-400'>
+					className='text-gray-600'>
 					{mode === "login" ? "Sign in to your account" : "Join us today"}
 				</motion.p>
 			</div>
@@ -143,9 +143,9 @@ export const AuthForm: React.FC<AuthFormProps> = ({
 						initial={{ opacity: 0, height: 0 }}
 						animate={{ opacity: 1, height: "auto" }}
 						exit={{ opacity: 0, height: 0 }}
-						className='flex items-center space-x-2 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg'>
+						className='flex items-center space-x-2 p-3 bg-red-50 border border-red-200 rounded-lg'>
 						<AlertCircle className='w-5 h-5 text-red-500 flex-shrink-0' />
-						<p className='text-sm text-red-700 dark:text-red-400'>{error}</p>
+						<p className='text-sm text-red-700'>{error}</p>
 					</motion.div>
 				)}
 			</AnimatePresence>
@@ -372,7 +372,7 @@ export const AuthForm: React.FC<AuthFormProps> = ({
 				animate={{ opacity: 1 }}
 				transition={{ delay: 0.4 }}
 				className='text-center'>
-				<p className='text-gray-600 dark:text-gray-400'>
+				<p className='text-gray-600'>
 					{mode === "login"
 						? "Don't have an account? "
 						: "Already have an account? "}
@@ -381,7 +381,7 @@ export const AuthForm: React.FC<AuthFormProps> = ({
 						onClick={() =>
 							handleModeChange(mode === "login" ? "signup" : "login")
 						}
-						className='text-black dark:text-white font-medium hover:underline transition-colors duration-200'>
+						className='text-black font-medium hover:underline transition-colors duration-200'>
 						{mode === "login" ? "Sign up" : "Sign in"}
 					</button>
 				</p>

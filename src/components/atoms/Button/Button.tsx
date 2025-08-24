@@ -8,7 +8,7 @@ interface ButtonProps {
 	variant?: "primary" | "secondary" | "outline";
 	size?: "sm" | "md" | "lg";
 	type?: "button" | "submit" | "reset";
-	onClick?: () => void;
+	onClick?: (e?: React.MouseEvent<HTMLButtonElement>) => void;
 	disabled?: boolean;
 	className?: string;
 }
@@ -26,12 +26,11 @@ export const Button: React.FC<ButtonProps> = ({
 		"font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2";
 
 	const variantClasses = {
-		primary:
-			"bg-black text-white hover:bg-gray-800 focus:ring-gray-500 dark:bg-white dark:text-black dark:hover:bg-gray-200",
+		primary: "bg-black text-white hover:bg-gray-800 focus:ring-gray-500",
 		secondary:
-			"bg-white text-black border border-black hover:bg-black hover:text-white focus:ring-gray-500 dark:bg-black dark:text-white dark:border-white dark:hover:bg-white dark:hover:text-black",
+			"bg-white text-black border border-black hover:bg-black hover:text-white focus:ring-gray-500",
 		outline:
-			"border border-gray-300 text-gray-700 hover:bg-gray-50 focus:ring-gray-500 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800",
+			"border border-gray-300 text-gray-700 hover:bg-gray-50 focus:ring-gray-500",
 	};
 
 	const sizeClasses = {
